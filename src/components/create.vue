@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="edit__header">
-      <h1 class="subtitle is-5">Редактировать статью</h1>
-      <b-button type="is-primary" class="create__button" @click.prevent="showCreate">
-        <b-icon icon="plus" rounded></b-icon>
+      <h1 class="subtitle is-5">Создать статью</h1>
+      <b-button type="is-primary" class="create__button" @click.prevent="showEdit">
+        <b-icon icon="pencil" rounded></b-icon>
       </b-button>
     </div>
     <div class="edit__body">
@@ -15,7 +15,7 @@
           <b-input type="textarea" v-model="discription"></b-input>
         </b-field>
         <div class="buttons edit__button">
-          <b-button>Применить</b-button>
+          <b-button>Создать</b-button>
         </div>
       </form>
     </div>
@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    showCreate () {
+    showEdit () {
       this.$store.dispatch('SHOWEDIT')
     }
   }

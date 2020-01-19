@@ -6,7 +6,8 @@
       </li>
     </ul>
     <div class="article-edit">
-      <edit></edit>
+      <edit v-if="!show"></edit>
+      <create v-if="show"></create>
     </div>
   </section>
 </template>
@@ -14,10 +15,12 @@
 <script>
 import articleItem from '@/components/editArticleItem'
 import edit from '@/components/edit'
+import create from '@/components/create'
 export default {
   components: {
     'article-item': articleItem,
-    'edit': edit
+    'edit': edit,
+    'create': create
   },
   data () {
     return {
@@ -48,6 +51,11 @@ export default {
           dateUpdate: '10 минут назад'
         }
       ]
+    }
+  },
+  computed: {
+    show () {
+      return this.$store.getters.getShowEdit
     }
   }
 }

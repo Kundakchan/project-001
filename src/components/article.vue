@@ -4,11 +4,11 @@
       <h2 class="title">{{ title }}</h2>
     </div>
     <div class="article__body">
-      <p class="subtitle">{{ discription }}</p>
+      <p class="">{{ discription }}</p>
     </div>
     <div class="article__footer level">
       <div class="level-left">
-        <span>30 дней назад</span>
+        <span class="is-size-7">30 дней назад</span>
       </div>
       <div class="level-right">
         <div class="buttons">
