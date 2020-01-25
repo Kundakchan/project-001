@@ -12,7 +12,9 @@
         <b-field :type="checkPasswordConfirm.status" :message="checkPasswordConfirm.message">
           <b-input placeholder="Повторите пароль" type="password" password-reveal v-model.trim="passwordConfirm"></b-input>
         </b-field>
-        <b-button @click.prevent="submit" type="is-primary is-pulled-right" outlined>Войти</b-button>
+        <p v-if="errorMessage !== null" class="is-size-7 has-text-danger">{{ errorMessage }}</p>
+        <b-button v-if="loading" loading type="is-pulled-right">Войти</b-button>
+        <b-button v-if="!loading" @click.prevent="submit" type="is-primary is-pulled-right" outlined>Войти</b-button>
       </form>
     </div>
   </section>
@@ -46,10 +48,14 @@ export default {
   methods: {
     submit () {
       if (!this.$v.$invalid) {
-        console.log({
+        const user = {
           email: this.email,
           password: this.password
-        })
+        }
+        this.$store.dispatch('SIGN_UP', user)
+          .then(() => {
+            this.$router.push('/')
+          })
       }
     }
   },
@@ -70,6 +76,12 @@ export default {
       if (!this.$v.passwordConfirm.sameAsPassword) return { status: 'is-danger', message: 'Пароль должен совподать' }
       if (!this.$v.passwordConfirm.$invalid) return { status: 'is-success', message: '' }
       return ''
+    },
+    errorMessage () {
+      return this.$store.getters.getError
+    },
+    loading () {
+      return this.$store.getters.getProcessing
     }
   }
 }

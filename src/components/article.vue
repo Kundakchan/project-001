@@ -8,10 +8,10 @@
     </div>
     <div class="article__footer level">
       <div class="level-left">
-        <span class="is-size-7">30 дней назад</span>
+        <span class="is-size-7">{{ date }}</span>
       </div>
       <div class="level-right">
-        <div class="buttons">
+        <div v-if="checkUser" class="buttons">
           <b-button class="" v-if="options.role === 'writer'">
             <b-icon icon="pencil" size="is-small" type="is-primary"></b-icon>
             <span>Изменить</span>
@@ -20,7 +20,7 @@
             <b-icon icon="delete" size="is-small" type="is-primary"></b-icon>
             <span>Удалить</span>
           </b-button>
-          <b-button class="" v-if="options.role === 'reader'">
+          <b-button class="">
             <b-icon icon="thumb-up" size="is-small" type="is-primary"></b-icon>
             <span>{{ like }}</span>
           </b-button>
@@ -40,7 +40,17 @@ export default {
       title: this.options.title,
       discription: this.options.discription,
       like: this.options.like,
-      role: this.options.role
+      role: this.options.role,
+      createDate: this.options.createDate
+    }
+  },
+  computed: {
+    date () {
+      const d = new Date(this.createDate)
+      return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} / ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+    },
+    checkUser () {
+      return this.$store.getters.checkUser
     }
   }
 }

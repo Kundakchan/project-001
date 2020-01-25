@@ -18,8 +18,15 @@ export default {
   data () {
     return {
       title: this.options.title,
-      dateCreate: this.options.dateCreate,
-      dateUpdate: this.options.dateUpdate
+      dateUpdate: this.options.dateUpdate,
+      createDate: this.options.createDate
+    }
+  },
+  methods: {},
+  computed: {
+    dateCreate () {
+      const d = new Date(this.createDate)
+      return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} / ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
     }
   }
 }

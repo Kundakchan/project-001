@@ -9,17 +9,21 @@
     <div class="edit__body">
       <form>
         <b-field label="Заголовок">
-          <b-input class="title" v-model="title"></b-input>
+          <b-input class="title" v-model="post.title"></b-input>
         </b-field>
         <b-field label="Содержимое статьи">
-          <b-input type="textarea" v-model="discription"></b-input>
+          <b-input type="textarea" v-model="post.discription"></b-input>
         </b-field>
         <div class="buttons edit__button">
-          <b-button>Применить</b-button>
+          <b-button @click="setUpdate">Применить</b-button>
         </div>
       </form>
     </div>
     <div class="edit__footer"></div>
+    <p>компонент</p>
+    <pre>{{ post }}</pre>
+    <p>options</p>
+    <pre>{{ update }}</pre>
   </div>
 </template>
 
@@ -30,13 +34,35 @@ export default {
   ],
   data () {
     return {
-      title: '',
-      discription: ''
+      post: {}
     }
   },
   methods: {
     showCreate () {
       this.$store.dispatch('SHOWEDIT')
+    },
+    setUpdate () {
+      let post = this.post
+      post.updateDate = new Date().toJSON()
+      this.$store.dispatch('UPDATE', post)
+    }
+  },
+  computed: {
+    update () {
+      return this.options
+    }
+  },
+  watch: {
+    update (val) {
+      this.post = {
+        id: val.id,
+        author: val.author,
+        title: val.title,
+        discription: val.discription,
+        createDate: val.createDate,
+        updateDate: val.updateDate,
+        like: val.like
+      }
     }
   }
 }

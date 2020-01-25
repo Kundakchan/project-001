@@ -1,6 +1,6 @@
 <template>
   <section class="container posts__section">
-    <app-article v-for="(item, index) in articles" :key="index" :options="item"></app-article>
+    <app-article v-for="(item) in posts" :key="item.id" :options="item"></app-article>
   </section>
 </template>
 
@@ -11,16 +11,16 @@ export default {
     'app-article': appArticel
   },
   data () {
-    return {
-      articles: [
-        {
-          title: 'new Article - 0',
-          discription: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda consectetur suscipit reiciendis voluptatibus sunt facere ad culpa vel atque dignissimos? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda consectetur suscipit reiciendis voluptatibus sunt facere ad culpa vel atque dignissimos?',
-          role: 'reader',
-          like: '28'
-        }
-      ]
+    return {}
+  },
+  methods: {},
+  computed: {
+    posts () {
+      return this.$store.getters.getPosts
     }
+  },
+  created () {
+    this.$store.dispatch('POSTS')
   }
 }
 </script>

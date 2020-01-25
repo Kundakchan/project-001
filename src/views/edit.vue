@@ -1,12 +1,12 @@
 <template>
   <section class="section edit">
     <ul class="article-list">
-      <li class="article__item" v-for="(item, index) in items" :key="index">
-        <article-item :options="item"></article-item>
+      <li class="article__item" v-for="(item, index) in postsMin" :key="index">
+        <article-item @click.native="pushEditData(item)" :options="item"></article-item>
       </li>
     </ul>
     <div class="article-edit">
-      <edit v-if="!show"></edit>
+      <edit v-if="!show" :options="editData"></edit>
       <create v-if="show"></create>
     </div>
   </section>
@@ -24,39 +24,24 @@ export default {
   },
   data () {
     return {
-      items: [
-        {
-          title: 'Я разрабитао програмное обеспечения',
-          dateCreate: '2 дня назад',
-          dateUpdate: 'Необновлялся'
-        },
-        {
-          title: 'Я разрабитао програмное обеспечения',
-          dateCreate: 'только что',
-          dateUpdate: 'Необновлялся'
-        },
-        {
-          title: 'Я разрабитао програмное обеспечения',
-          dateCreate: '2 дня назад',
-          dateUpdate: '12.01.2020'
-        },
-        {
-          title: 'Я разрабитао програмное обеспечения',
-          dateCreate: '2 дня назад',
-          dateUpdate: 'Необновлялся'
-        },
-        {
-          title: 'Я разрабитао програмное обеспечения',
-          dateCreate: '5 дня назад',
-          dateUpdate: '10 минут назад'
-        }
-      ]
+      editData: {}
+    }
+  },
+  methods: {
+    pushEditData (data) {
+      this.editData = data
     }
   },
   computed: {
     show () {
       return this.$store.getters.getShowEdit
+    },
+    postsMin () {
+      return this.$store.getters.getPosts
     }
+  },
+  created () {
+    if (!this.$store.getters.checkPosts) this.$store.dispatch('POSTS')
   }
 }
 </script>
